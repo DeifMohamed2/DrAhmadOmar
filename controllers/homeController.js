@@ -142,11 +142,29 @@ const public_Register_post = async (req, res) => {
   }
 
   // auth Of jwt
-  const hashedPassword = await bcrypt.hash(Password,10)
+
   let quizesInfo = []
   let videosInfo = []
   if (Grade ==="Grade1") {
     await User.findOne({Grade:Grade,Code:639818}).then((result)=>{
+      quizesInfo = result.quizesInfo
+      videosInfo = result.videosInfo
+    })
+    console.log(quizesInfo)
+    console.log(videosInfo)
+  }else if(Grade ==="Grade2"){
+    await User.findOne({Grade:Grade,Code:660498}).then((result)=>{
+      quizesInfo = result.quizesInfo
+      videosInfo = result.videosInfo
+    })
+  }else if(Grade ==="Grade3"){
+    await User.findOne({Grade:Grade,Code:971001}).then((result)=>{
+      quizesInfo = result.quizesInfo
+      videosInfo = result.videosInfo
+    })
+  }
+  const hashedPassword = await bcrypt.hash(Password,10)
+
   
   try {
     const user =  new User({
@@ -162,82 +180,6 @@ const public_Register_post = async (req, res) => {
       place:place,
       Code:Code,
       subscribe :false,
-      quizesInfo : result.quizesInfo,  
-      videosInfo : result.videosInfo,
-      totalScore:0,
-      examsEnterd:0,
-      totalQuestions:0,
-      totalSubscribed:0,
-      isTeacher:false,
-      ARorEN : ARorEN,
-      chaptersPaid:[],
-      videosPaid: [],
-      examsPaid: [],
-      // Add other fields as needed
-    });
-    user
-    .save()
-    .then((result) => {
-      
-        res.status(201).redirect("Register?StudentCode=" + encodeURIComponent(Code));
-
-    }).catch((error)=>{
-      if (error.name === 'MongoServerError' && error.code === 11000) {
-        // Duplicate key error
-        errors.emailDub = "هذا الرقم مستخدم من قبل";
-        // Handle the error as needed
-        res.render("Register", {
-          title: "Register Page",
-          errors:errors,
-          firebaseError:"",
-          formData: req.body, // Pass the form data back to pre-fill the form
-        });
-    } else {
-        // Handle other errors
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-    })
-
-  } catch (error) {
-    if (error.name === 'MongoServerError' && error.code === 11000) {
-        // Duplicate key error
-        errors.emailDub = "This email is already in use.";
-        // Handle the error as needed
-        res.status(409).json({ message: 'User already in use' });
-    } else {
-        // Handle other errors
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-
-
-  }
-
-
-
-    })
-    console.log(quizesInfo)
-    console.log(videosInfo)
-  }else if(Grade ==="Grade2"){
-    await User.findOne({Grade:Grade,Code:660498}).then((result)=>{
-      quizesInfo = result.quizesInfo
-      videosInfo = result.videosInfo
-        
-  try {
-    const user =  new User({
-      Username:Username,
-      Password:hashedPassword,
-      gov:gov,
-      Markez:Markez,
-      schoolName:schoolName,
-      Grade:Grade,
-      gender:gender,
-      phone:phone,
-      parentPhone:parentPhone,
-      place:place,
-      Code:Code,
-      subscribe :false,
       quizesInfo : quizesInfo,  
       videosInfo : videosInfo,
       totalScore:0,
@@ -289,83 +231,6 @@ const public_Register_post = async (req, res) => {
 
 
   }
-
-    })
-  }else if(Grade ==="Grade3"){
-    await User.findOne({Grade:Grade,Code:971001}).then((result)=>{
-      quizesInfo = result.quizesInfo
-      videosInfo = result.videosInfo
-        
-  try {
-    const user =  new User({
-      Username:Username,
-      Password:hashedPassword,
-      gov:gov,
-      Markez:Markez,
-      schoolName:schoolName,
-      Grade:Grade,
-      gender:gender,
-      phone:phone,
-      parentPhone:parentPhone,
-      place:place,
-      Code:Code,
-      subscribe :false,
-      quizesInfo : quizesInfo,  
-      videosInfo : videosInfo,
-      totalScore:0,
-      examsEnterd:0,
-      totalQuestions:0,
-      totalSubscribed:0,
-      isTeacher:false,
-      ARorEN : ARorEN,
-      chaptersPaid:[],
-      videosPaid: [],
-      examsPaid: [],
-      // Add other fields as needed
-    });
-    user
-    .save()
-    .then((result) => {
-      
-        res.status(201).redirect("Register?StudentCode=" + encodeURIComponent(Code));
-
-    }).catch((error)=>{
-      if (error.name === 'MongoServerError' && error.code === 11000) {
-        // Duplicate key error
-        errors.emailDub = "هذا الرقم مستخدم من قبل";
-        // Handle the error as needed
-        res.render("Register", {
-          title: "Register Page",
-          errors:errors,
-          firebaseError:"",
-          formData: req.body, // Pass the form data back to pre-fill the form
-        });
-    } else {
-        // Handle other errors
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-    })
-
-  } catch (error) {
-    if (error.name === 'MongoServerError' && error.code === 11000) {
-        // Duplicate key error
-        errors.emailDub = "This email is already in use.";
-        // Handle the error as needed
-        res.status(409).json({ message: 'User already in use' });
-    } else {
-        // Handle other errors
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-
-
-  }
-
-    })
-  }
-
-
 
   
 
