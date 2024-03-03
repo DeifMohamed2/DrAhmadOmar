@@ -143,15 +143,28 @@ const public_Register_post = async (req, res) => {
 
   // auth Of jwt
 
-  // let userResult;
-  // if (Grade === "Grade1") {
-  //     userResult = await User.findOne({ Grade: Grade, Code: 632728 });
-  // } else if (Grade === "Grade2") {
-  //     userResult = await User.findOne({ Grade: Grade, Code: 623991 });
-  // } else if (Grade === "Grade3") {
-  //     userResult = await User.findOne({ Grade: Grade, Code: 985436 });
-  // }
+let quizesInfo 
+  let videosInfo 
+  if (Grade ==="Grade1") {
+    
 
+    await User.findOne({Grade:Grade,Code:765739}).then((result)=>{
+      quizesInfo = result.quizesInfo
+      videosInfo = result.videosInfo
+    })
+    console.log(quizesInfo)
+    console.log(videosInfo)
+  }else if(Grade ==="Grade2"){
+    await User.findOne({Grade:Grade,Code:762551}).then((result)=>{
+      quizesInfo = result.quizesInfo
+      videosInfo = result.videosInfo
+    })
+  }else if(Grade ==="Grade3"){
+    await User.findOne({Grade:Grade,Code:751546}).then((result)=>{
+      quizesInfo = result.quizesInfo
+      videosInfo = result.videosInfo
+    })
+  }
 
   const hashedPassword = await bcrypt.hash(Password,10)
 
@@ -170,8 +183,8 @@ const public_Register_post = async (req, res) => {
       place:place,
       Code:Code,
       subscribe :false,
-      quizesInfo : [],  
-      videosInfo :[],
+      quizesInfo : quizesInfo,  
+      videosInfo :videosInfo,
       totalScore:0,
       examsEnterd:0,
       totalQuestions:0,
