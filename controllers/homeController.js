@@ -143,14 +143,14 @@ const public_Register_post = async (req, res) => {
 
   // auth Of jwt
 
-  let userResult;
-  if (Grade === "Grade1") {
-      userResult = await User.findOne({ Grade: Grade, Code: 632728 });
-  } else if (Grade === "Grade2") {
-      userResult = await User.findOne({ Grade: Grade, Code: 623991 });
-  } else if (Grade === "Grade3") {
-      userResult = await User.findOne({ Grade: Grade, Code: 985436 });
-  }
+  // let userResult;
+  // if (Grade === "Grade1") {
+  //     userResult = await User.findOne({ Grade: Grade, Code: 632728 });
+  // } else if (Grade === "Grade2") {
+  //     userResult = await User.findOne({ Grade: Grade, Code: 623991 });
+  // } else if (Grade === "Grade3") {
+  //     userResult = await User.findOne({ Grade: Grade, Code: 985436 });
+  // }
 
 
   const hashedPassword = await bcrypt.hash(Password,10)
@@ -158,7 +158,7 @@ const public_Register_post = async (req, res) => {
   
   try {
     const user =  new User({
-      Username:userResult.Username,
+      Username:Username,
       Password:hashedPassword,
       gov:gov,
       Markez:Markez,
