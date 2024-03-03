@@ -147,9 +147,7 @@ const public_Register_post = async (req, res) => {
   let videosInfo = []
   if (Grade ==="Grade1") {
     await User.findOne({Grade:Grade,Code:639818}).then((result)=>{
-
-
-        
+  
   try {
     const user =  new User({
       Username:Username,
