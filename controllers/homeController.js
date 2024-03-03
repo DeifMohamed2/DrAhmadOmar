@@ -147,8 +147,7 @@ const public_Register_post = async (req, res) => {
   let videosInfo = []
   if (Grade ==="Grade1") {
     await User.findOne({Grade:Grade,Code:639818}).then((result)=>{
-      quizesInfo = result.quizesInfo
-      videosInfo = result.videosInfo
+
 
         
   try {
@@ -165,8 +164,8 @@ const public_Register_post = async (req, res) => {
       place:place,
       Code:Code,
       subscribe :false,
-      quizesInfo : quizesInfo,  
-      videosInfo : videosInfo,
+      quizesInfo : result.quizesInfo,  
+      videosInfo : result.videosInfo,
       totalScore:0,
       examsEnterd:0,
       totalQuestions:0,
