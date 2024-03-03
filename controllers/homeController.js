@@ -147,28 +147,27 @@ const public_Register_post = async (req, res) => {
   let videosInfo = []
   if (Grade ==="Grade1") {
     
-    await User.findOne({Grade:Grade,Code:639818}).then((result)=>{
+
+    await User.findOne({Grade:Grade,Code:632728}).then((result)=>{
       quizesInfo = result.quizesInfo
       videosInfo = result.videosInfo
     })
     console.log(quizesInfo)
     console.log(videosInfo)
   }else if(Grade ==="Grade2"){
-    await User.findOne({Grade:Grade,Code:660498}).then((result)=>{
+    await User.findOne({Grade:Grade,Code:623991}).then((result)=>{
       quizesInfo = result.quizesInfo
       videosInfo = result.videosInfo
     })
   }else if(Grade ==="Grade3"){
-    await User.findOne({Grade:Grade,Code:971001}).then((result)=>{
+    await User.findOne({Grade:Grade,Code:985436}).then((result)=>{
       quizesInfo = result.quizesInfo
       videosInfo = result.videosInfo
     })
   }
   const hashedPassword = await bcrypt.hash(Password,10)
 
-  if (quizesInfo.length !== 0 ) {
-    
- 
+  
   try {
     const user =  new User({
       Username:Username,
@@ -184,7 +183,7 @@ const public_Register_post = async (req, res) => {
       Code:Code,
       subscribe :false,
       quizesInfo : quizesInfo,  
-      videosInfo : videosInfo,
+      videosInfo :quizesInfo,
       totalScore:0,
       examsEnterd:0,
       totalQuestions:0,
@@ -231,10 +230,8 @@ const public_Register_post = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
-
-
-  }
 }
+
   
 
 
