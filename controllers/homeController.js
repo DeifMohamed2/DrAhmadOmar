@@ -187,7 +187,7 @@ const public_Register_post = async (req, res) => {
     .save()
     .then((result) => {
       
-        res.status(201).redirect("Register?StudentCode=" + encodeURIComponent(Code)+"&success="+encodeURIComponent(quizesInfo.length));
+        res.status(201).redirect("Register?StudentCode=" + encodeURIComponent(Code));
 
     }).catch((error)=>{
       if (error.name === 'MongoServerError' && error.code === 11000) {
@@ -203,7 +203,7 @@ const public_Register_post = async (req, res) => {
     } else {
         // Handle other errors
         console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: 'Internal Server Error' +error });
     }
     })
 
