@@ -146,6 +146,7 @@ const public_Register_post = async (req, res) => {
   let quizesInfo = []
   let videosInfo = []
   if (Grade ==="Grade1") {
+    
     await User.findOne({Grade:Grade,Code:639818}).then((result)=>{
       quizesInfo = result.quizesInfo
       videosInfo = result.videosInfo
@@ -165,7 +166,9 @@ const public_Register_post = async (req, res) => {
   }
   const hashedPassword = await bcrypt.hash(Password,10)
 
-  
+  if (quizesInfo.length !== 0 ) {
+    
+ 
   try {
     const user =  new User({
       Username:Username,
@@ -231,7 +234,7 @@ const public_Register_post = async (req, res) => {
 
 
   }
-
+}
   
 
 
