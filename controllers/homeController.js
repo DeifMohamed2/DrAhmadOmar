@@ -163,9 +163,9 @@ const public_Register_post = async (req, res) => {
       videosInfo = result.videosInfo
     })
   }
-
   const hashedPassword = await bcrypt.hash(Password,10)
 
+  
   try {
     const user =  new User({
       Username:Username,
@@ -180,7 +180,7 @@ const public_Register_post = async (req, res) => {
       place:place,
       Code:Code,
       subscribe :false,
-      quizesInfo :quizesInfo,
+      quizesInfo : quizesInfo,  
       videosInfo : videosInfo,
       totalScore:0,
       examsEnterd:0,
