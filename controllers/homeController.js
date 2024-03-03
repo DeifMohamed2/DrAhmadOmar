@@ -183,7 +183,7 @@ const public_Register_post = async (req, res) => {
       Code:Code,
       subscribe :false,
       quizesInfo : quizesInfo,  
-      videosInfo :quizesInfo,
+      videosInfo :videosInfo,
       totalScore:0,
       examsEnterd:0,
       totalQuestions:0,
