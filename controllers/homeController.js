@@ -160,7 +160,7 @@ let quizesInfo
       videosInfo = result.videosInfo
     })
   }else if(Grade ==="Grade3"){
-    await User.findOne({Grade:Grade,Code:751546}).then((result)=>{
+    await User.findOne({Grade:Grade,Code:862935}).then((result)=>{
       quizesInfo = result.quizesInfo
       videosInfo = result.videosInfo
     })
