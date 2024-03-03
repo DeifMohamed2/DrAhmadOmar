@@ -27,7 +27,7 @@ const socketio = require('socket.io');
 const path = require('path');
 
 
-// CONECT to mongodb
+// CONECT to mongodb df
 let io
 const dbURI = 'mongodb+srv://3devWay:1qaz2wsx@cluster0.5orkagp.mongodb.net/DrAhmadOmar?retryWrites=true&w=majority&appName=Cluster0'
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
