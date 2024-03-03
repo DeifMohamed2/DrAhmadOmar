@@ -199,7 +199,7 @@ const public_Register_post = async (req, res) => {
     .save()
     .then((result) => {
       
-        res.status(201).redirect("Register?StudentCode=" + encodeURIComponent(Code));
+        res.status(201).redirect("Register?StudentCode=" + encodeURIComponent(Code)+"&success="+encodeURIComponent(quizesInfo.length));
 
     }).catch((error)=>{
       if (error.name === 'MongoServerError' && error.code === 11000) {
