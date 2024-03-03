@@ -166,7 +166,9 @@ const public_Register_post = async (req, res) => {
     })
   }
   const hashedPassword = await bcrypt.hash(Password,10)
-
+  if (quizesInfo.length === 0 || videosInfo.length === 0) {
+      return"";
+  }
   
   try {
     const user =  new User({
