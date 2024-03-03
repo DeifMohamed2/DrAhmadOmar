@@ -1,0 +1,183 @@
+<footer id="footer">
+  <div class="container footer__container">
+    <div class="footer__1">
+      <a href="index.html" class="footer__logo">
+          <div class="Title" style="width: 100%;">
+              <div class="the" style="float: left;"> 
+                  <h5 style="font-family: 'Roboto Mono', monospace; font-weight: lighter; color: rgb(255, 255, 255);">T H E</h5>
+              </div>
+              <div class="dynamoFooter">
+                  <h1 style=" font-family: 'Righteous'; color:#00A18Fff ; font-weight: lighter; font-size: 4rem;" > DYNAMO</h1>
+              </div>
+              <div class="inphy">
+                  <h5 style="font-family: 'Roboto Mono', monospace; font-weight: lighter; color: rgb(255, 255, 255);margin-right: 20px;" ><span style="padding-right:40px;">I N</span>  P H Y S I C S</h5>
+              </div>
+          </div>    
+          
+      </a>
+      
+      <p>
+          Understanding_ Physics
+      </p>
+    </div>
+
+    <div class="footer__2">
+      <h4>الصفحات</h4>
+      <ul class="permalinks">
+        <li><a href="index.html" style="color: #fff;"> احجز معنا الان </a></li>
+      </ul>
+    </div>
+
+    <div class="footer__3">
+      <h4>الشروط والاحكام</h4>
+      <ul class="privacy" >
+        <li style="color: #fff !important;"><a href="#" style="text-decoration: none;"  >البنود والاتفاقات</a></li>
+        <li style="color: #fff !important;"><a href="#" style="text-decoration: none;">الشروط والاحكام</a></li>
+
+      </ul>
+    </div>
+
+    <div class="footer__4">
+      <h4>الدعم الفني</h4>
+      <div>
+        <p>01110001224</p>
+        <p>info@Ahmadomar.com</p>
+      </div>
+
+      <ul class="footer__socials">
+        <li  style="background-color: #fff; border-radius: 20%;">
+          <a href="https://www.facebook.com/profile.php?id=100093322111886"><i class="uil uil-facebook-f" style="color:#4267B2 ;"></i></a>
+        </li>
+        <li style="background-color: #fff; border-radius: 20%;">
+          <a  href="https://wa.me/+201110001224"><i class="uil uil-whatsapp" style="color: #128C7E;"></i></a>
+        </li>
+        <li style="background-color: #fff; border-radius: 20%;">
+          <a  href="https://www.youtube.com/channel/UC7nqDVYp195dgFUdskcChow"><i class="uil uil-youtube" style="color: #FF0000;"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__copyright">
+    <small> تطبق الشروط والاحكام &copy; 2023</small>
+  </div>
+</footer>
+
+<script>
+  module={}
+  
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').classList.toggle('window-scroll', window.scrollY > 0)
+  document.querySelector('#title1').classList.toggle('navColor', window.scrollY > 0)
+  document.querySelector('#title2').classList.toggle('navColor', window.scrollY > 0)
+  document.querySelector('#title3').classList.toggle('navColor', window.scrollY > 0)
+  document.querySelector("#open-menu-btn").classList.toggle('navColor', window.scrollY > 0)
+  document.querySelector("#close-menu-btn").classList.toggle('navColor', window.scrollY > 0)
+})
+
+
+
+// show/hide faq answer 
+
+const faqs = document.querySelectorAll('.faq');
+
+faqs.forEach(faq => {
+  faq.addEventListener('click', () => {
+      faq.classList.toggle('open');
+      // change icon
+      const icon = faq.querySelector('.faq__icon i');
+      if(icon.className === 'uil uil-plus') {
+          icon.className = "uil uil-minus";
+      } else {
+          icon.className = "uil uil-plus";
+      }
+  })
+})
+
+
+
+// show/hide nav menu
+const menu = document.querySelector(".nav__menu");
+const menuBtn = document.querySelector("#open-menu-btn");
+const closeBtn = document.querySelector("#close-menu-btn");
+
+
+menuBtn.addEventListener('click', () => {
+  menu.style.display = "flex";
+  closeBtn.style.display = "inline-block";
+  menuBtn.style.display = "none";
+})
+
+
+// close nav menu 
+const closeNav = () => {
+  menu.style.display = "none";
+  closeBtn.style.display = "none";
+  menuBtn.style.display = "inline-block";
+}
+
+closeBtn.addEventListener('click', closeNav)
+
+
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach((entry)=>{
+      console.log(entry)
+      if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+      }else{
+          entry.target.classList.remove("show");
+      }
+  })
+});
+
+const hiddenElements = document.querySelectorAll('.hidden');
+hiddenElements.forEach((el)=> observer.observe(el));
+
+
+
+
+function query(id){
+  
+  const myUrlWithParams = new URL(window.location);
+  
+  myUrlWithParams.searchParams.append("name", id);
+  
+  console.log(myUrlWithParams.href);
+  window.location.href=`about.html?id=${id}`
+}
+
+
+const boxes = document.querySelectorAll(".box-right")
+
+window.addEventListener("scroll",checkbox)
+checkbox ( )
+function checkbox ( ){
+  const trigger = window.innerHeight/5*4;
+  boxes.forEach(box=>{
+      const boxTop = box.getBoundingClientRect().top;
+      if (boxTop<trigger) {
+          box.classList.add("show")
+      }
+  })
+}
+
+const boxesLeft = document.querySelectorAll(".box-left")
+
+window.addEventListener("scroll",checkboxleft)
+checkboxleft ( )
+function checkboxleft ( ){
+  const trigger2 = window.innerHeight/5*4;
+  boxesLeft.forEach(box=>{
+      const boxTop2 = box.getBoundingClientRect().top;
+      if (boxTop2<trigger2) {
+          box.classList.add("show")
+      }
+  })
+}
+
+document.getElementById("Contactus").addEventListener('click',()=>{
+  document.getElementById("footer").scrollIntoView({ behavior: 'smooth' })
+
+})
+
+
+</script>
