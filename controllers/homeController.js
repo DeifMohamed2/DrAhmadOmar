@@ -150,6 +150,8 @@ const public_Register_post = async (req, res) => {
       quizesInfo = result.quizesInfo
       videosInfo = result.videosInfo
     })
+    console.log(quizesInfo)
+    console.log(videosInfo)
   }else if(Grade ==="Grade2"){
     await User.findOne({Grade:Grade,Code:660498}).then((result)=>{
       quizesInfo = result.quizesInfo
