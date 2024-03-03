@@ -143,8 +143,8 @@ const public_Register_post = async (req, res) => {
 
   // auth Of jwt
 
-  let quizesInfo = []
-  let videosInfo = []
+  let quizesInfo 
+  let videosInfo 
   if (Grade ==="Grade1") {
     
 
