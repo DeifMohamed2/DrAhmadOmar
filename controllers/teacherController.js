@@ -758,33 +758,33 @@ const studentsRequests_get = async (req, res) => {
     let perPage = 50;
     let page = req.query.page || 1;
 
-    // await User.find(query, { Username: 1, Code: 1, createdAt: 1, updatedAt: 1, subscribe: 1 })
-    //   .sort({ 'subscribe': 1, 'createdAt': 1 })
-    //   .skip(perPage * page - perPage)
-    //   .limit(perPage)
-    //   .exec()
+    await User.find(query, { Username: 1, Code: 1, createdAt: 1, updatedAt: 1, subscribe: 1 })
+      .sort({ 'subscribe': 1, 'createdAt': 1 })
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .exec()
 
-    //   .then(async (result) => {
+      .then(async (result) => {
 
-    //     const count = await User.countDocuments({});
-    //     const nextPage = parseInt(page) + 1;
-    //     const hasNextPage = nextPage <= Math.ceil(count / perPage);
-    //     const hasPreviousPage = page > 1; // Check if current page is greater than 1
+        const count = await User.countDocuments({});
+        const nextPage = parseInt(page) + 1;
+        const hasNextPage = nextPage <= Math.ceil(count / perPage);
+        const hasPreviousPage = page > 1; // Check if current page is greater than 1
 
-    //     res.render("teacher/studentsRequests",
-    //       {
-    //         title: "StudentsRequests",
-    //         path: req.path,
-    //         modalData: null,
-    //         studentsRequests: result,
-    //         studentPlace: StudentPlace,
-    //         Grade: grade,
-    //         isSearching: false,
-    //         nextPage: hasNextPage ? nextPage : null,
-    //         previousPage: hasPreviousPage ? page - 1 : null // Calculate previous page
-    //       });
+        res.render("teacher/studentsRequests",
+          {
+            title: "StudentsRequests",
+            path: req.path,
+            modalData: null,
+            studentsRequests: result,
+            studentPlace: StudentPlace,
+            Grade: grade,
+            isSearching: false,
+            nextPage: hasNextPage ? nextPage : null,
+            previousPage: hasPreviousPage ? page - 1 : null // Calculate previous page
+          });
 
-    //   })
+      })
   } catch (error) {
     console.log(error)
   }
