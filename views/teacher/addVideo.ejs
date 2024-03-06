@@ -29,7 +29,7 @@
       padding: 20px;
     }
 
-
+    
     </style>
 
     <body>
@@ -166,11 +166,15 @@
                                     <div class="col-md-4 text-center">
                                         <% if (chaptersData) { %>
                                             <select id="ChaptersNames" name="ChaptersIds"
-                                                class="Grade w-100 text-center" required>
-                                          
-                        
+                                                class="Grade w-100 text-center">
 
-                                                            <option value="">اختر اسم chapter </option>
+                                                <% }else { %>
+
+                                                    <select id="ChaptersNames" name="ChaptersIds" disabled
+                                                        class="Grade w-100 text-center">
+                                                        <% } %>
+
+                                                            <option>اختر اسم chapter </option>
 
                                                             <% if (chaptersData) { %>
                                                                 <% chaptersData.forEach(chapter=> { %>
@@ -178,7 +182,7 @@
                                                                         <%= chapter.chapterName %>
                                                                     </option>
                                                                     <% }) %>
-                                                            <% } %>
+                                                                        <% } %>
                                                     </select>
 
                                     </div>
