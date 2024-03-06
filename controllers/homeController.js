@@ -73,6 +73,7 @@ const public_Register_get = (req, res) => {
 };
 
 const public_Register_post = async (req, res) => {
+ try { 
   const {
     Password,
     Username,
@@ -232,13 +233,12 @@ const public_Register_post = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 
-
-
-
-}
-
-  
-
+  }
+ }
+  catch (error) {
+    console.log(error)
+    res.status(500).send(`Internal Server Error ${error.message}`); // Handle other errors
+  }
 
 };
 
