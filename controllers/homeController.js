@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken')
 
 const  jwtSecret = process.env.JWTSECRET
 
-const { v4: uuidv4 } = require('uuid')
+const { v4: uuidv4 } = require('uuid');
+const { use } = require("../routes/homeRoutes");
 
 
 
@@ -31,7 +32,7 @@ const public_login_post = async (req, res) => {
 
     const user = await User.findOne({
       $or: [
-        { Email: emailOrPhone },
+       
         { phone: emailOrPhone } 
       ]
     });
@@ -73,7 +74,6 @@ const public_Register_get = (req, res) => {
 };
 
 const public_Register_post = async (req, res) => {
- try { 
   const {
     Password,
     Username,
@@ -144,19 +144,15 @@ const public_Register_post = async (req, res) => {
 
   // auth Of jwt
 
-  let quizesInfo 
-  let videosInfo 
-  if (Grade ==="Grade1") {
-    
+  let quizesInfo = []
+  let videosInfo = []
 
-    await User.findOne({Grade:Grade,Code:779586})
-    .then((result)=>{
-      console.log(result)
+  if (Grade ==="Grade1") {
+    await User.findOne({Grade:Grade,Code:779586}).then((result)=>{
       quizesInfo = result.quizesInfo
       videosInfo = result.videosInfo
+      
     })
-    console.log(quizesInfo)
-    console.log(videosInfo)
   }else if(Grade ==="Grade2"){
     await User.findOne({Grade:Grade,Code:942987}).then((result)=>{
       quizesInfo = result.quizesInfo
@@ -169,9 +165,10 @@ const public_Register_post = async (req, res) => {
     })
   }
 
+
+
   const hashedPassword = await bcrypt.hash(Password,10)
 
-  
   try {
     const user =  new User({
       Username:Username,
@@ -186,8 +183,8 @@ const public_Register_post = async (req, res) => {
       place:place,
       Code:Code,
       subscribe :false,
-      quizesInfo : quizesInfo,  
-      videosInfo :videosInfo,
+      quizesInfo :quizesInfo,
+      videosInfo : videosInfo,
       totalScore:0,
       examsEnterd:0,
       totalQuestions:0,
@@ -219,7 +216,7 @@ const public_Register_post = async (req, res) => {
     } else {
         // Handle other errors
         console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' +error });
+        res.status(500).json({ message: 'Internal Server Error' });
     }
     })
 
@@ -234,13 +231,10 @@ const public_Register_post = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
+}
 
-  }
- }
-  catch (error) {
-    console.log(error)
-    res.status(500).send(`Internal Server Error ${error.message}`); // Handle other errors
-  }
+  
+
 
 };
 

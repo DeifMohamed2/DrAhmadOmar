@@ -43,15 +43,13 @@
                     <main>
                         <div class="row">
 
-                            <div class="alert alert-danger w-50 mt-4" id="alert">
+                            <div class="alert alert-danger w-75 mt-4" id="alert">
                  
                                 <button class="BTNAlert"> <i class="fa-solid fa-x"></i></button>
-                                <h1 style="text-align: center; font-size: 18px; margin-bottom: 5px;">الكود خاطئ</h1>
-                                <h2 style="text-align: center; font-size: 14px; margin-bottom: 5px;">الأسباب ممكن تكون:</h2>
-                                <ol type="a" style="font-size: 12px; margin-bottom: 5px;">
-                                  <li>الكود مستخدم من قبل</li>
-                                  <li>الكود مش بتاع الامتحان</li>
-                                  <li>الكود مكتوب غلط</li>
+                                <h1 style="text-align: center; font-size: 18px; margin-bottom: 5px; text-decoration: underline;">يبدو ان هناك خطأ ما</h1>
+                                <h2>تأكد من انك قمت برفع الصوره والفيديو</h2>
+                                <h2>تأكد من ملئ جميع البيانات المطلوبه</h2>
+                                <h3>اذا قمت برفع الفيديو بالفعل لا داعي لرفعو من جديد وقم بالاتصال بي ضيف محمد مطور المنصه</h3>
                                 </ol>
                               </div>
 
@@ -191,9 +189,9 @@
                                         <select id="VideoType" name="VideoType" class="Grade w-100 text-center"
                                             required>
                                             <option value="">اختر نوع الفيديو </option>
-                                            <option value="chapterLectures"> Lecture </option>
-                                            <option value="chapterSummaries">Summary </option>
-                                            <option value="chapterSolvings">Solving </option>
+                                            <option value="chapterLectures"> شرح </option>
+                                            <option value="chapterSummaries">مراجعه </option>
+                                            <option value="chapterSolvings">حل </option>
                                         </select>
                                     </div>
                                 </div>
@@ -214,7 +212,7 @@
                                                     </div>
                                                     <div class="selction">
 
-                                                        <input type="text" name="videoURL" class="d-none" id="videoURL"
+                                                        <input type="text" name="videoURL" style="width: 1px !important; background: transparent;" id="videoURL"
                                                             value="">
                                                         <input type="text" name="imgURL" class="d-none" id="imgURL"
                                                             value="">
@@ -268,7 +266,7 @@
                                                             value="100" placeholder="عدد المشاهدات" required>
 
                                                         <input type="number" name="videoPrice" class="salary" disabled
-                                                            id="videoPrice" placeholder="سعر الفيديو" required>
+                                                            id="videoPrice" placeholder="سعر الفيديو" >
 
                                                     </div>
 
@@ -349,23 +347,60 @@
         <script src="/assest/bootstrap.min.js"></script>
         <script src="/assest/bootstrap.bundle.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
 
 
         <script>
-            const socket = io();
+                const socket = io();
 
-            socket.on('upload_progress', (data) => {
-                document.getElementById('BtnVideoUpload').innerHTML = `Upload Progress: ${data.percentage}%`;
-                if (data.percentage === 100) {
-                    document.getElementById('BtnVideoUpload').innerHTML = `تم الرفع`;
+          // Log socket connection status
+    socket.on('connect', () => {
+        console.log('Socket.IO connected successfully!');
+    });
 
-                }
-            });
-            socket.on('videoLink', (data) => {
-                console.log(data);
-                document.getElementById('videoURL').value = `${data.videoLink}`;
-            });
+    // Log any errors with the socket connection
+    socket.on('connect_error', (error) => {
+        console.error('Socket.IO connection error:', error);
+    });
+
+    // Listen for the 'videoLink' event from the server
+    socket.on('videoLink', (data) => {
+        console.log('Received video link:', data);
+        const videoURLInput = document.getElementById('videoURL');
+        if (videoURLInput) {
+       
+            videoURLInput.setAttribute('value', data.videoLink)
+            document.getElementById('generate_Video_Box_Btn').disabled = false;
+            console.log('Video URL set successfully:', data.videoLink);
+        } else {
+            console.error('Element with id "videoURL" not found in the DOM.');
+        }
+    });
+const getQueryStringParameter = (name) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+          };
+
+          if(getQueryStringParameter('error')=="true"){
+            let alertElement = document.getElementById('alert');
+          alertElement.style.display = 'block';
+          alertElement.classList.add('show');
+    
+          // Hide the alert after 20 seconds
+          setTimeout(function() {
+            alertElement.classList.remove('show');
+            alertElement.classList.add('hide');
+          }, 40000);
+          }
+
+  
+
+      document.querySelector('.BTNAlert').addEventListener('click', function() {
+        document.getElementById('alert').classList.add('hide');
+      });
+         
+         
 
             
             
@@ -404,47 +439,7 @@
                 }
             })
 
-
-
-      // Get query string parameters
-      function getQueryStringParams() {
-        var params = {};
-        var search = window.location.search.substring(1);
-        var pairs = search.split('&');
-        for (var i = 0; i < pairs.length; i++) {
-          var pair = pairs[i].split('=');
-          if (pair.length === 2) {
-            var key = decodeURIComponent(pair[0]);
-            var value = decodeURIComponent(pair[1]);
-            params[key] = value;
-          }
-        }
-        return params;
-      }
-    
-      // Handle query string errors
-      function handleQueryStringError() {
-        var params = getQueryStringParams();
-        if (params.error) {
-          var alertElement = document.getElementById('alert');
-          alertElement.style.display = 'block';
-          alertElement.classList.add('show');
-    
-          // Hide the alert after 20 seconds
-          setTimeout(function() {
-            alertElement.classList.remove('show');
-            alertElement.classList.add('hide');
-          }, 15000);
-        }
-      }
-    
-      // Call the function to handle query string errors
-      handleQueryStringError();
-
-
-      document.querySelector('.BTNAlert').addEventListener('click', function() {
-        document.getElementById('alert').classList.add('hide');
-      });
+   
         </script>
 
  <!-- Include Dropzone JS -->
@@ -459,11 +454,16 @@
      acceptedFiles: ".mp4",
      dictDefaultMessage: "Drop MP4 files here or click to upload",
      init: function () {
+        let addButton = document.getElementById('generate_Video_Box_Btn');
+
+        this.on("processing", function () {
+          // Disable the button when processing (upload starts)
+          addButton.disabled = true;
+        });
+
        this.on("success", function (file, response) {
-         console.log("File uploaded successfully:", response);
        });
        this.on("error", function (file, errorMessage) {
-         console.error("Error uploading file:", errorMessage);
        });
      }
    };

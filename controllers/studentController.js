@@ -277,23 +277,40 @@ const buyVideo = async (req, res) => {
   try {
     const videoId = req.params.videoId;
     const code = req.body.code;
-   const CodeData =  await Code.findOneAndUpdate
-    ({ "Code": code , "isUsed": false , "codeType":"Video", "codeFor": videoId   }, 
-    { "isUsed": true, "usedBy": req.userData.Code,  }, { new: true });
+    console.log(videoId, code);
+
+    // Update Code document
+    const CodeData = await Code.findOneAndUpdate(
+      { "Code": code, "isUsed": false, "codeType": "Video", "codeFor": videoId },
+      { "isUsed": true, "usedBy": req.userData.Code },
+      { new: true }
+    );
+
     if (CodeData) {
-      await User.findByIdAndUpdate(req.userData._id, { $push: { videosPaid: videoId } ,$inc: {totalSubscribed: 1}  , $set: { 'videosInfo.$.videoPurchaseStatus': true } });
-      res.send('Video Bought');
+      // Check if the videoId exists in videosInfo array before updating
+      const user = await User.findOne({ _id: req.userData._id, "videosInfo._id": videoId });
+      if (user) {
+        // Update User document
+        await User.findOneAndUpdate(
+          { _id: req.userData._id, "videosInfo._id": videoId },
+          { 
+            $push: { videosPaid: videoId }, 
+            $inc: { totalSubscribed: 1 },
+            $set: { 'videosInfo.$.videoPurchaseStatus': true } 
+          }
+        );
+        res.status(204).send();
+      } else {
+        res.status(301).send()
+      }
+    } else {
+      res.status(301).send();
     }
-    else{
-      res.send('Video not Bought');
-      // res.redirect('/student/videos/lecture/'+videoId+'?error=true');
-    }
-  }
-  catch (error ) {
+  } catch (error) {
     res.send(error.message);
   }
 }
-    
+
 
 // ================== End Lecture  ====================== //
 
