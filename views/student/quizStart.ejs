@@ -158,11 +158,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js" integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-const beforeUnloadListener = (event) => {
-  event.preventDefault();
 
-  return (event.returnValue = "Are you sure you want to leave?");
-};
 
   // ================== side bar  ====== ///
 
@@ -204,9 +200,9 @@ const beforeUnloadListener = (event) => {
         console.error("Error parsing answers from localStorage:", error);
       }
 }
-      const quizData = JSON.parse('<%- JSON.stringify(quiz) %>');
-      const question = JSON.parse('<%- JSON.stringify(question) %>');
-      const userQuizInfo = JSON.parse('<%- JSON.stringify(userQuizInfo) %>');
+    const quizData = <%- JSON.stringify(quiz) %>;
+      const question =<%- JSON.stringify(question) %>;
+      const userQuizInfo = <%- JSON.stringify(userQuizInfo) %>;
 
       
      // ==================  Set up variblaes and local storage  ====== ///

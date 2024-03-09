@@ -482,17 +482,14 @@ const ranking_get = async (req,res)=>{
       // Find all students and sort them by totalScore
       const allStudents = await User.find({}, { Username: 1, Code: 1, totalScore: 1 })
         .sort({ totalScore: -1 })
-        .exec();
     
-        console.log(allStudents);
+
       // Find the index of the student in the sorted array
       const userRank = allStudents.findIndex(s => s.Code === +searchInput) + 1;
       console.log(userRank);
       const paginatedStudents = await User.find({ Code: searchInput }, { Username: 1, Code: 1, totalScore: 1 })
         .sort({ totalScore: -1 })
-        .skip(perPage * page - perPage)
-        .limit(perPage)
-        .exec();
+    
     
       const count = await User.countDocuments({});
     
@@ -516,9 +513,7 @@ const ranking_get = async (req,res)=>{
     
     else{
     await User.find({},{Username:1,Code:1,totalScore:1}).sort({ totalscore: -1 })  
-    .skip(perPage * page - perPage)
-    .limit(perPage)
-    .exec()
+ 
     .then(async (result) => {
       const count = await Code.countDocuments({});
       const nextPage = parseInt(page) + 1;
@@ -668,6 +663,24 @@ const quizWillStart = async (req, res) => {
   
 
 
+const escapeSpecialCharacters = (text) => {
+  try {
+    // Attempt to parse the JSON string
+    const parsedText = JSON.parse(text);
+    // If parsing succeeds, stringify it back and escape special characters
+    const escapedText = JSON.stringify(parsedText, (key, value) => {
+      if (typeof value === 'string') {
+        return value.replace(/["\\]/g, '\\$&');
+      }
+      return value;
+    });
+    return escapedText;
+  } catch (error) {
+    // If parsing fails, return the original text
+    return text;
+  }
+};
+
 const quiz_start = async (req, res) => {
   try {
     const quizId = req.params.quizId;
@@ -697,14 +710,22 @@ const quiz_start = async (req, res) => {
       console.log(questionNumber);
     }
 
-    // Find the current question
+
+    // Find the current question and escape special characters
     const question = quiz.Questions.find(q => q.qNumber.toString() === questionNumber.toString());
+
+    question.title = escapeSpecialCharacters(question.title);
+    question.answer1 = escapeSpecialCharacters(question.answer1);
+    question.answer2 = escapeSpecialCharacters(question.answer2);
+    question.answer3 = escapeSpecialCharacters(question.answer3);
+    question.answer4 = escapeSpecialCharacters(question.answer4);
 
     res.render("student/quizStart", { title: "Quiz", path: req.path, quiz, userData: req.userData, question, userQuizInfo });
   } catch (error) {
     res.send(error.message);
   }
 }
+
 
 
 
