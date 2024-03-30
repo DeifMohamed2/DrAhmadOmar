@@ -33,5 +33,4 @@ We're dedicated to providing exceptional support and value your feedback. If you
 
 Feel free to explore the platform and embark on your learning journey with confidence!
 
-Sincerely,  
-[Your Company Name]
+
