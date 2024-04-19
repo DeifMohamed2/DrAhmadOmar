@@ -144,26 +144,26 @@ const public_Register_post = async (req, res) => {
 
   // auth Of jwt
 
-  // let quizesInfo = []
-  // let videosInfo = []
+  let quizesInfo = []
+  let videosInfo = []
 
-  // if (Grade ==="Grade1") {
-  //   await User.findOne({Grade:Grade,Code:765739}).then((result)=>{
-  //     quizesInfo = result.quizesInfo
-  //     videosInfo = result.videosInfo
+  if (Grade ==="Grade1") {
+    await User.findOne({Grade:Grade,Code:641723}).then((result)=>{
+      quizesInfo = result.quizesInfo
+      videosInfo = result.videosInfo
       
-  //   })
-  // }else if(Grade ==="Grade2"){
-  //   await User.findOne({Grade:Grade,Code:762551}).then((result)=>{
-  //     quizesInfo = result.quizesInfo
-  //     videosInfo = result.videosInfo
-  //   })
-  // }else if(Grade ==="Grade3"){
-  //   await User.findOne({Grade:Grade,Code:751546}).then((result)=>{
-  //     quizesInfo = result.quizesInfo
-  //     videosInfo = result.videosInfo
-  //   })
-  // }
+    })
+  }else if(Grade ==="Grade2"){
+    await User.findOne({Grade:Grade,Code:862624}).then((result)=>{
+      quizesInfo = result.quizesInfo
+      videosInfo = result.videosInfo
+    })
+  }else if(Grade ==="Grade3"){
+    await User.findOne({Grade:Grade,Code:849274}).then((result)=>{
+      quizesInfo = result.quizesInfo
+      videosInfo = result.videosInfo
+    })
+  }
 
 
 
@@ -183,8 +183,8 @@ const public_Register_post = async (req, res) => {
       place:place,
       Code:Code,
       subscribe :false,
-      quizesInfo :[],
-      videosInfo : [],
+      quizesInfo :quizesInfo,
+      videosInfo : videosInfo,
       totalScore:0,
       examsEnterd:0,
       totalQuestions:0,
