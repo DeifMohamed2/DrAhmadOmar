@@ -117,29 +117,7 @@
                         <!------------------- END OF INSGIHTS ---------------->
                         <div class="col-lg-4 ">
                             <div class="left">
-                                <div class="top">
-                                    <button id="menu-btn">
-                                        <span class="material-icons-sharp">
-                                            menu
-                                        </span>
-                                    </button>
-                                    <div class="theme-toggler">
-                                        <span class="material-icons-sharp active">
-                                            light_mode
-                                        </span>
-                                        <span class="material-icons-sharp">
-                                            dark_mode
-                                        </span>
-                                    </div>
-                                    <div class="profile">
-                                        <div class="info">
-                                            <p>اهلا بك،<b id="userName"> </b></p>
-                                        </div>
-                                        <div class="profile-photo">
-                                            <a href="settings.html"><img id="profile_photo" alt="profile photo"></a>
-                                        </div>
-                                    </div>
-                                </div>
+                                <%- include("./partials/top.ejs") %> 
                                 <!-- END OF TOP -->
                                 <div class="recent-updates " onclick="window.location.href = 'ranking.html'">
                                     <h2></h2>
