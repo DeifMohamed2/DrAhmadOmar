@@ -17,10 +17,11 @@
   </div>    
   <script>
     const sdieMenu = document.querySelector("aside");
-    const menuBtn = document.querySelector("#menu-btn");
+    const menuBtn  =  document.querySelector("#menu-btn");
     const closeBtn = document.querySelector("#close-btn");
-
+    
     menuBtn.addEventListener("click", () => {
+      console.log("clicked");
       sdieMenu.style.display = "block";
     });
 
