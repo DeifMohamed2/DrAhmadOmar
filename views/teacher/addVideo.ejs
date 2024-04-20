@@ -55,15 +55,36 @@
 
                             <div class=" col-md-6 ">
                                 <div class="left float-start ms-3" style="margin-top: 0.2rem;">
-                                    <%- include("./partials/top.ejs") %> 
-
+                                    <div class="top">
+                                        <button id="menu-btn">
+                                            <span class="material-icons-sharp">
+                                                menu
+                                            </span>
+                                        </button>
+                                        <div class="theme-toggler">
+                                            <span class="material-icons-sharp active">
+                                                light_mode
+                                            </span>
+                                            <span class="material-icons-sharp">
+                                                dark_mode
+                                            </span>
+                                        </div>
+                                        <div class="profile">
+                                            <div class="info">
+                                                <p>اهلا بك،<b id="userName"> </b></p>
+                                            </div>
+                                            <div class="profile-photo">
+                                                <img src="" alt="profile photo">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- END OF TOP -->
                                 </div>
                             </div>
                         </div>
                         <div class="row chapter_Box">
                             <div class="col-md-8">
-                                <h1>اضف cahpter جديد</h1>
+                                <h1>اضف Chapter جديد</h1>
                                 <form action="/teacher/addChapter" method="post">
 
                                     <div class="row">
@@ -331,6 +352,18 @@
 
 
         <script>
+
+const sdieMenu = document.querySelector("aside");
+    const menuBtn = document.querySelector("#menu-btn");
+    const closeBtn = document.querySelector("#close-btn");
+
+    menuBtn.addEventListener("click", () => {
+      sdieMenu.style.display = "block";
+    });
+
+    closeBtn.addEventListener("click", () => {
+      sdieMenu.style.display = "none";
+    });
                 const socket = io();
 
           // Log socket connection status
@@ -395,18 +428,25 @@ const getQueryStringParameter = (name) => {
                 }
             })
 
-
-            const paymentStatus = document.getElementById('paymentStatus')
-            paymentStatus.addEventListener('change', () => {
-                if (paymentStatus.value == "Pay") {
-
-                    document.getElementById('videoPrice').removeAttribute('disabled')
-
-                } else {
-                    document.getElementById('videoPrice').setAttribute('disabled', true)
-
+            const paymentStatus = document.getElementById('paymentStatus');
+    // Check if the element exists before adding the event listener
+    if (paymentStatus) {
+        paymentStatus.addEventListener('change', () => {
+            if (paymentStatus.value === "Pay") {
+                const videoPrice = document.getElementById('videoPrice');
+                if (videoPrice) {
+                    videoPrice.removeAttribute('disabled');
                 }
-            })
+            } else {
+                const videoPrice = document.getElementById('videoPrice');
+                if (videoPrice) {
+                    videoPrice.setAttribute('disabled', true);
+                }
+            }
+        });
+    } else {
+        console.error("Element with ID 'paymentStatus' not found.");
+    }
 
             const prerequisites = document.getElementById('prerequisites')
             prerequisites.addEventListener('change', () => {
@@ -425,27 +465,47 @@ const getQueryStringParameter = (name) => {
  <script>
 
 
-   // Initialize Dropzone
-   Dropzone.options.myDropzone = {
-     paramName: "filetoupload", // Correct parameter name matching server-side code
-     maxFilesize: 5120, // MB
-     maxFiles: 1,
-     acceptedFiles: ".mp4",
-     dictDefaultMessage: "Drop MP4 files here or click to upload",
-     init: function () {
+// Initialize Dropzone
+Dropzone.options.myDropzone = {
+    paramName: "filetoupload",
+    maxFilesize: 5120, // MB
+    maxFiles: 1,
+    acceptedFiles: ".mp4",
+    dictDefaultMessage: "Drop MP4 files here or click to upload",
+    init: function () {
         let addButton = document.getElementById('generate_Video_Box_Btn');
 
         this.on("processing", function () {
-          // Disable the button when processing (upload starts)
-          addButton.disabled = true;
+            // Disable the button when processing (upload starts)
+            addButton.disabled = true;
         });
 
-       this.on("success", function (file, response) {
-       });
-       this.on("error", function (file, errorMessage) {
-       });
-     }
-   };
+        this.on("success", function (file, response) {
+            // Enable the button after successful upload
+            addButton.disabled = false;
+        });
+
+        this.on("error", function (file, errorMessage) {
+            // Enable the button after failed upload
+            addButton.disabled = false;
+            // Optionally, display an error message to the user
+            alert("Upload failed: ممكن بسبب ان الشاشه اتقفلت " + errorMessage);
+        });
+
+        // Resume file upload if it was interrupted due to power loss
+        let resumedFile = sessionStorage.getItem("resumedFile");
+        if (resumedFile) {
+            this.addFile(resumedFile);
+            sessionStorage.removeItem("resumedFile");
+        }
+
+        // Save the file to session storage when added to the dropzone
+        this.on("addedfile", function (file) {
+            sessionStorage.setItem("resumedFile", file);
+        });
+    }
+};
+
  </script>
 
 <!-- Upload Photo To Firebase -->
