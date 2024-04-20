@@ -213,7 +213,7 @@
                                                     <div class="selction">
 
                                                         <input type="text" name="videoURL" style="width: 1px !important; background: transparent;" id="videoURL"
-                                                            value="">
+                                                            value="good">
                                                         <input type="text" name="imgURL" class="d-none" id="imgURL"
                                                             value="">
                                                         <select name="paymentStatus" id="paymentStatus" class="Grade"
@@ -489,7 +489,7 @@ Dropzone.options.myDropzone = {
             // Enable the button after failed upload
             addButton.disabled = false;
             // Optionally, display an error message to the user
-            alert("Upload failed: ممكن بسبب ان الشاشه اتقفلت " + errorMessage);
+            alert("Upload failed: " + errorMessage);
         });
 
         // Resume file upload if it was interrupted due to power loss
