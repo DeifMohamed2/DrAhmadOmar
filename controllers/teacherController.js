@@ -12,28 +12,24 @@ const Excel = require('exceljs');
 
 const { v4: uuidv4 } = require('uuid')
 
-var qs = require("querystring");
 
-var options = {
-  "method": "POST",
-  "hostname": "api.ultramsg.com",
-  "port": null,
-  "path": "/instance78871/messages/image",
-  "headers": {
-    "content-type": "application/x-www-form-urlencoded"
-  }
-};
-var optionsChat = {
-  "method": "POST",
-  "hostname": "api.ultramsg.com",
-  "port": null,
-  "path": "/instance78871/messages/chat",
-  "headers": {
-    "content-type": "application/x-www-form-urlencoded"
-  }
-};
+
 
 const dash_get = (req, res) => {
+//   const idsToKeep = [
+//     "65e4cfe6022bba8f9ed4a80f",
+//     "65e4d024022bba8f9ed4a811",
+//     "65e4d045022bba8f9ed4a813",
+//     "65eb2856a76c472e4fa64fd3",
+//     "65e8fd8449a3eecaa4593bd3"
+// ];
+//   User.deleteMany({ _id: { $nin: idsToKeep } })
+//   .then(result => {
+//       console.log(`${result.deletedCount} users deleted.`);
+//   })
+//   .catch(error => {
+//       console.error("Error deleting users:", error);
+//   });
 
   res.render("teacher/dash", { title: "DashBoard", path: req.path });
 };
@@ -781,7 +777,7 @@ const converStudentRequestsToExcel = async (req, res) => {
 const getSingleUserAllData = async (req, res) => {
   try {
     const studentID = req.params.studentID
-    await User.findOne({ '_id': studentID }, { Username: 1, Email: 1, gov: 1, Markez: 1, gender: 1, phone: 1, WhatsApp: 1, parentPhone: 1, place: 1, Code: 1, createdAt: 1, updatedAt: 1, subscribe: 1 })
+    await User.findOne({ '_id': studentID }, { Username: 1, Email: 1, gov: 1, Markez: 1, gender: 1, phone: 1, WhatsApp: 1, parentPhone: 1, place: 1, Code: 1, createdAt: 1, updatedAt: 1, subscribe: 1,PasswordNotHashed:1 })
       .then((result) => {
         res.render("teacher/studentsRequests",
           {
@@ -1068,6 +1064,7 @@ const updateQuestion = (req, res) => {
     quizQuestions[indexToUpdate] = {
       questionPhoto:questionPhoto,
       title: Qtitle,
+      qNumber : quizQuestions[indexToUpdate].qNumber,
       answer1: answer1,
       answer2: answer2,
       answer3: answer3,
@@ -1348,7 +1345,7 @@ const getStudentsDataOfQuiz = async (req, res) => {
       },
       {
         $sort: {
-          "createdAt": 1
+          "quizesInfo.Score": -1
         }
       }
     ])
@@ -1376,6 +1373,7 @@ const getStudentsDataOfQuiz = async (req, res) => {
 
   }
 }
+
 
 const searchForUserInQuiz = async (req, res) => {
   const { searchBy, searchInput } = req.query
