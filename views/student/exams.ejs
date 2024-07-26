@@ -57,6 +57,7 @@
                       <th style="padding-left: 20px">عدد الاسئله</th>
                       <th style="padding-left: 20px">مده الامتحان</th>
                       <th style="padding-left: 20px">درجه الامتحان</th>
+                      <th style="padding-left: 20px">ترتيبك </th>
                       <th style="padding-left: 20px"></th>
                       <th style="padding-left: 20px"></th>
                     </thead>
@@ -69,7 +70,7 @@
                               <td style="padding-left: 20px"><%= exam.quizName %></td>
                               <td style="padding-left: 20px"><%= exam.questionsCount %></td>
                               <td style="padding-left: 20px"><%= exam.timeOfQuiz %> دقيقه</td>
-
+                         
 
                               <% if (exam["quizUser"]["isEnterd"]) { %>
                                 <td style="padding-left: 20px"><%= exam["quizUser"]["Score"] %> </td>
@@ -77,6 +78,7 @@
                               <% } else {  %>
                                 <td style="padding-left: 20px">لم يتم الدخول</td>
                               <% } %>  
+                              <td style="padding-left: 20px"> <%= exam["quizUser"]['lengthOfUsersTakesQuiz']%> / <%= exam["quizUser"]['rank'] %> </td>
 
 
 
@@ -122,14 +124,17 @@
                                 <% } else{ %>
                                   <% if ( !exam["quizUser"]["isEnterd"]) { %>
 
-                                    <% if (exam["quizUser"]["inProgress"]) { %>
+                                     <% if (exam["quizUser"]["inProgress"]) { %>
+                                      
+                                  
                                       <td style="padding-left: 20px">
-                                        <button button class="primary my-3" onclick="window.location.href='/student/quiz/<%= exam._id %>'"> تكمله الامتحان</button>
+                                        <button button class="primary my-3" onclick="window.location.href='/student/quiz/<%= exam._id %>'">  تكمله الامتحان</button>
                                     </td>
-                                    <% } else {%>
-                                 
+                                  
+                                    <% } else { %> 
+
                                       <td style="padding-left: 20px">
-                                        <button button class="primary my-3" onclick="window.location.href='/student/quizWillStart/<%= exam._id %>?qNumber=1'">دخول الامتحان</button>
+                                        <button button class="primary my-3" onclick="window.location.href='/student/quiz/<%= exam._id %>'">دخول الامتحان</button>
                                     </td>
                                     <% } %>
 
@@ -142,7 +147,7 @@
 
                               <% } else {  %>
                                 <td style="padding-left: 20px">
-                                    <button button class="primary my-3">مشاهده الاجابات</button>
+                                  <button  class="primary my-3" onclick="window.location.href='/student/reviewAnswers/<%= exam._id %>?qNumber=1'"> مشاهدة اجاباتي</button>
                                 </td>
                               <% } %>  
 
