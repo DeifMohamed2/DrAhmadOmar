@@ -1750,6 +1750,7 @@ const createGeneralCodes = async (req, res) => {
 
       c++;
       req.io.emit('creatingCodes', {nCodesFinished: c ,numberOfCodes:numberOfCodes });
+  
       const row = worksheet.addRow([c, code]);
       // Apply alternating row colors
       if (c % 2 === 0) {
