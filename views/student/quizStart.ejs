@@ -310,9 +310,13 @@
       
       })
 
+
       document.getElementById("finish").addEventListener('click', () => {
+        document.getElementById("finish").setAttribute('disabled',true)
+
         setTimeout(() => {
           finish();
+
         }, 1);
       })
 
