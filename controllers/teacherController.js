@@ -823,19 +823,7 @@ const updateUserData = async (req, res) => {
     }
 
     // Redirect to the desired page after successful update
-    res.status(201).render("teacher/studentsRequests",
-      {
-        title: "StudentsRequests",
-        path: req.path,
-        modalData: null,
-        modalDelete:studentID ,
-        studentsRequests: null,
-        studentPlace: query.place || 'All',
-        Grade: query.Grade,
-        isSearching: false,
-        nextPage: null,
-        previousPage: null // Calculate previous page
-      });
+    res.status(201).redirect(`/teacher/studentsRequests?Grade=${query.Grade}&studentPlace=${query.place}`);
   } catch (error) {
     // Handle errors appropriately
     console.error(error);
