@@ -823,7 +823,7 @@ const updateUserData = async (req, res) => {
     }
 
     // Redirect to the desired page after successful update
-    res.status(201).redirect(`/teacher/studentsRequests?Grade=${query.Grade}&studentPlace=${query.place}`);
+    res.status(201).redirect(`/teacher/studentsRequests?Grade=${query.Grade}&studentPlace=All`);
   } catch (error) {
     // Handle errors appropriately
     console.error(error);
@@ -868,7 +868,7 @@ const DeleteStudent = async (req, res) => {
       
     }
     await User.findByIdAndDelete(studentID).then((result) => {
-      res.status(200).redirect('/teacher/studentsRequests');
+      res.status(200).redirect(`/teacher/studentsRequests?Grade=${query.Grade}&studentPlace=All`);
     })
   } catch (error) {
     console.log(error)
