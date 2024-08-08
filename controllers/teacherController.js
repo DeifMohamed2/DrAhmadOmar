@@ -718,8 +718,8 @@ const searchForUser = async (req, res) => {
             modalData: null,
             modalDelete :null,
             studentsRequests: result,
-            studentPlace: 'All',
-            Grade: "Grade1",
+            studentPlace: query.place || 'All',
+            Grade: query.Grade,
             isSearching: true,
             nextPage: null,
             previousPage: null // Calculate previous page
