@@ -476,6 +476,8 @@ const updateVideoData = async (req, res) => {
     videoAllowedAttemps,
     AccessibleAfterViewing,
     videoPrice,
+    imgURL,
+      PDFURL,
   } = req.body;
 
   try {
@@ -494,6 +496,8 @@ const updateVideoData = async (req, res) => {
           [`${videoType}.$.videoAllowedAttemps`]: +videoAllowedAttemps || 0,
           [`${videoType}.$.AccessibleAfterViewing`]: AccessibleAfterViewing || "",
           [`${videoType}.$.videoPrice`]: videoPrice || 0,
+          [`${videoType}.$.imgURL`]: imgURL || "",
+          [`${videoType}.$.PDFURL`]: PDFURL || "",
         }
       },
       {
@@ -533,7 +537,6 @@ const updateVideoData = async (req, res) => {
     res.status(500).send("Error updating video data");
   }
 }
-
 
 const addViewsToStudent = async (req, res) => {
   const videoId = req.params.VideoID;
